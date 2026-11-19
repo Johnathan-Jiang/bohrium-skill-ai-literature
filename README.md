@@ -20,4 +20,4 @@
 - README.md：该赛题方案说明、边界、测试示例
 
 ## 仓库链接
-https://github.com/【你的用户名】/bohrium-skill-ai-literature
+https://github.com/【Johnathan-Jiang】/bohrium-skill-ai-literature
