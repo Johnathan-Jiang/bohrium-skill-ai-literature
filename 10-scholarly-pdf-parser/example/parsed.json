@@ -1,0 +1,382 @@
+{
+  "case_id": null,
+  "status": "success",
+  "ocr": false,
+  "document": {
+    "title": "A Sample Two-Column Paper on Reading Order",
+    "authors": [
+      "Alice Author, Bob Author"
+    ],
+    "affiliations": [
+      "University of Example, School of Science"
+    ],
+    "abstract": "This paper describes a method for extracting text from two-column layouts while preserving reading order and page-level evidence for every extracted block.",
+    "sections": [
+      {
+        "heading": "(preamble)",
+        "level": 0,
+        "page": 1,
+        "bbox": [
+          40.0,
+          55.0,
+          402.7,
+          77.0
+        ],
+        "content_blocks": [
+          {
+            "text": "A Sample Two-Column Paper on Reading Order",
+            "page": 1,
+            "bbox": [
+              40.0,
+              55.0,
+              402.7,
+              77.0
+            ]
+          },
+          {
+            "text": "Alice Author, Bob Author",
+            "page": 1,
+            "bbox": [
+              40.0,
+              102.0,
+              160.4,
+              117.1
+            ]
+          },
+          {
+            "text": "University of Example, School of Science",
+            "page": 1,
+            "bbox": [
+              40.0,
+              126.0,
+              222.3,
+              139.7
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Abstract",
+        "level": 1,
+        "page": 1,
+        "bbox": [
+          40.0,
+          160.0,
+          88.7,
+          176.5
+        ],
+        "content_blocks": [
+          {
+            "text": "This paper describes a method for extracting text from two-column layouts while preserving reading order and page-level evidence for every extracted block.",
+            "page": 1,
+            "bbox": [
+              40.0,
+              188.0,
+              524.6,
+              216.5
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "1. Introduction",
+        "level": 2,
+        "page": 1,
+        "bbox": [
+          40.0,
+          272.0,
+          123.3,
+          288.5
+        ],
+        "content_blocks": [
+          {
+            "text": "Multi-column reading order is a common source of errors. We address it with gap-based column detection and vertical sorting.",
+            "page": 1,
+            "bbox": [
+              40.0,
+              300.0,
+              262.3,
+              343.3
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "2. Methods",
+        "level": 2,
+        "page": 1,
+        "bbox": [
+          40.0,
+          392.0,
+          102.7,
+          408.5
+        ],
+        "content_blocks": [
+          {
+            "text": "We cluster text blocks by x-position, detect a central gutter, and sort each column top-to-bottom before interleaving full-width blocks.",
+            "page": 1,
+            "bbox": [
+              40.0,
+              420.0,
+              270.1,
+              463.3
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "3. Results",
+        "level": 2,
+        "page": 1,
+        "bbox": [
+          320.0,
+          272.0,
+          376.7,
+          288.5
+        ],
+        "content_blocks": [
+          {
+            "text": "Our method recovers the correct order on 98 percent of test pages, with ambiguous cases flagged as uncertain.",
+            "page": 1,
+            "bbox": [
+              320.0,
+              300.0,
+              554.0,
+              343.3
+            ]
+          },
+          {
+            "text": "Method  F1  Order-accuracy Baseline  0.82  0.91 Ours  0.96  0.98",
+            "page": 1,
+            "bbox": [
+              320.0,
+              426.0,
+              432.5,
+              465.0
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "References",
+        "level": 1,
+        "page": 2,
+        "bbox": [
+          40.0,
+          55.0,
+          104.7,
+          71.5
+        ],
+        "content_blocks": []
+      }
+    ],
+    "tables": [
+      {
+        "caption": "Table 1",
+        "rows": [],
+        "page": 1,
+        "bbox": [
+          320.0,
+          402.0,
+          357.9,
+          417.1
+        ],
+        "needs_manual_check": false
+      }
+    ],
+    "figures": [],
+    "formulas": [],
+    "references": [
+      {
+        "text": "[1] Author A. Title One. Journal of Parsing, 2026.",
+        "page": 2,
+        "bbox": [
+          40.0,
+          85.0,
+          255.7,
+          98.7
+        ]
+      },
+      {
+        "text": "[2] Author B. Title Two. Conf. Document Analysis, 2025.",
+        "page": 2,
+        "bbox": [
+          40.0,
+          108.0,
+          287.3,
+          121.7
+        ]
+      }
+    ],
+    "footnotes": [],
+    "headers_footers": [],
+    "reading_order": [
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          55.0,
+          402.7,
+          77.0
+        ],
+        "text": "A Sample Two-Column Paper on Reading Order"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          102.0,
+          160.4,
+          117.1
+        ],
+        "text": "Alice Author, Bob Author"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          126.0,
+          222.3,
+          139.7
+        ],
+        "text": "University of Example, School of Science"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          160.0,
+          88.7,
+          176.5
+        ],
+        "text": "Abstract"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          188.0,
+          524.6,
+          216.5
+        ],
+        "text": "This paper describes a method for extracting text from two-column layouts while preserving reading order and page-level evidence for every extracted block."
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          272.0,
+          123.3,
+          288.5
+        ],
+        "text": "1. Introduction"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          300.0,
+          262.3,
+          343.3
+        ],
+        "text": "Multi-column reading order is a common source of errors. We address it with gap-based column detection and vertical sorting."
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          392.0,
+          102.7,
+          408.5
+        ],
+        "text": "2. Methods"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          40.0,
+          420.0,
+          270.1,
+          463.3
+        ],
+        "text": "We cluster text blocks by x-position, detect a central gutter, and sort each column top-to-bottom before interleaving full-width blocks."
+      },
+      {
+        "page": 1,
+        "bbox": [
+          320.0,
+          272.0,
+          376.7,
+          288.5
+        ],
+        "text": "3. Results"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          320.0,
+          300.0,
+          554.0,
+          343.3
+        ],
+        "text": "Our method recovers the correct order on 98 percent of test pages, with ambiguous cases flagged as uncertain."
+      },
+      {
+        "page": 1,
+        "bbox": [
+          320.0,
+          402.0,
+          357.9,
+          417.1
+        ],
+        "text": "Table 1"
+      },
+      {
+        "page": 1,
+        "bbox": [
+          320.0,
+          426.0,
+          432.5,
+          465.0
+        ],
+        "text": "Method  F1  Order-accuracy Baseline  0.82  0.91 Ours  0.96  0.98"
+      },
+      {
+        "page": 2,
+        "bbox": [
+          40.0,
+          55.0,
+          104.7,
+          71.5
+        ],
+        "text": "References"
+      },
+      {
+        "page": 2,
+        "bbox": [
+          40.0,
+          85.0,
+          255.7,
+          98.7
+        ],
+        "text": "[1] Author A. Title One. Journal of Parsing, 2026."
+      },
+      {
+        "page": 2,
+        "bbox": [
+          40.0,
+          108.0,
+          287.3,
+          121.7
+        ],
+        "text": "[2] Author B. Title Two. Conf. Document Analysis, 2025."
+      }
+    ]
+  },
+  "uncertainty": [],
+  "sources": {
+    "pdf": "example/sample_paper.pdf",
+    "pages": 2,
+    "engine": "PyMuPDF 2.1"
+  }
+}
