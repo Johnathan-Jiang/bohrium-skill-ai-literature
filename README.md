@@ -1,23 +1,34 @@
-# bohrium-skill-ai-literature
-玻尔产品周赛·地大站赛｜AI文献阅读与学术写作 10赛题Skill集合
+# 文献翻译 Skill
 
-## 赛题清单
-1. 文献文档解析
-2. 文献翻译
-3. 文献总结与结构化笔记
-4. Nanopublication
-5. 文献知识图谱构建
-6. 学术语言润色
-7. 参考文献与引用管理
-8. 引言与相关工作写作
-9. 方法与实验章节写作
-10. LaTeX写作与编译
+把真实科研论文（PDF/文本）翻译成可核验的双语对照结果，保证术语一致、段落完整、关系准确、译文可回原文。
 
-## 目录说明
-每个 `skill_xx_xxx` 文件夹为一个独立参赛Skill，内含：
-- SKILL.md：Skill定义文件（Bohrium规范）
-- main.py：运行脚本
-- README.md：该赛题方案说明、边界、测试示例
+## 文件结构
 
-## 仓库链接
-https://github.com/【Johnathan-Jiang】/bohrium-skill-ai-literature
+- `SKILL.md` — Skill 本体：触发条件、工作流、四条硬规则、输出契约、异常处理、自查清单。
+- `scripts/verify_translation.py` — 译文校验脚本。
+- `references/term-table-template.md` — 术语表格式与锁定规则。
+- `examples/minimal-example.md` — 最小调用示例（标注为示例，不冒充正式案例结果）。
+
+## 用法
+
+Agent 加载 `SKILL.md` 后，按运行契约读取 `/input/task.md`、`/input/case.json` 与 `resources.yaml` 指向的 PDF，产出双语对照结果到 `/app/output/result.json`。
+
+## 校验脚本
+
+```bash
+python3 scripts/verify_translation.py result.json
+```
+
+检查项：术语唯一译名、段号—译文一一对应、数字保留、文献编号保留。退出码 0=通过。
+
+## 输出
+
+`result.json` 含：`case_id`、`status`、`term_table`、`segments`（段号/原文/译文/依据/位置）、`verification`、`sources`、`uncertainty`、`change_records`。
+
+## 依赖
+
+Python 3 标准库；读取 PDF 文本层依赖运行时提供的 `pdftotext`/`pdf-text-tool`。
+
+## 限制
+
+不处理扫描件 OCR（无文本层时如实标注）；公式/表格为图片时保留原文符号并标 `[待确认]`，不编造内容。
