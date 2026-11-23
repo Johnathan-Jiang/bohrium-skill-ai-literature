@@ -1,1 +1,92 @@
 
+---
+name: nanopublication
+description: 把论文关键结论拆成可独立判断真假的科研断言，绑定最小证据片段与来源，输出可机器读取的结构。用于断言拆解、证据绑定、来源追溯、Nanopublication 生成与结构化导出等任务；需要"拆得细、对得上、追得回、读得懂"时触发。
+---
+
+# Nanopublication：断言拆解、证据绑定与可追溯导出
+
+把一段论文结论拆成若干条各自可判断真假的**科研断言**，每条绑定真正支撑它的最小证据片段与原文位置，输出可被下游程序直接解析的结构。
+
+## 运行契约
+
+- 输入：`/input/task.md`、`/input/case.json`、`resources.yaml` 及实际论文文件。
+- 工作目录 `/app/work`；最终结果写入 `/app/output/`。
+- 先读真实文件；扫描件、原文无法访问、证据跨图表、断言找不到支撑片段、断言与证据冲突、字段缺失等如实记录。
+- `/app/output/result.json` 必须包含：`case_id`、`status`、`output_contract` 全部字段、`sources`、`uncertainty`、`change_records`。
+- 预算 64 次模型请求 / 900 秒：先拆断言，再逐条绑证据，增量完善。
+- 结构化导出用 JSON（可附 RDF/N-Quads 风格映射说明），保证可机器解析、无需人工清洗。
+
+## 工作流
+
+1. **识别边界**：读 `task.md`/`case.json`，确认要处理的结论区间、断言粒度要求、字段规范、导出格式。
+2. **定位结论段**：找出论文中可独立判断真假的结论句（结果、机制、性能、比较、条件性结论）。
+3. **断言拆解**：每段结论拆成若干条单主体、单关系、单判断的断言；**不把整段塞进一个字段**。保留条件与限定（in/on/under/within + 数值范围）。
+4. **绑证据**：为每条断言找**最小充分**支撑片段（原句/原段），记录原文位置（页码+段落/图表/公式）与短引文。找不到支撑时标 `unsupported`，不硬凑。
+5. **补来源元数据**：论文标题、作者、年份、版本/DOI（原文有则记，无则标 `unknown`）、证据位置。
+6. **导出**：用 `references/nanopub-schema.md` 的字段与序列化形态导出；断言 ID 稳定、可回溯。
+7. **输出**：断言列表 + 证据绑定 + 来源链路，写入 `result.json`，并运行 `python3 scripts/validate_nanopub.py result.json` 校验断言字段与证据。
+
+## 四条硬规则
+
+### 拆得细
+- 一条断言只表达一个可判断真假的命题；复合句拆开。
+- 条件和限定（适用对象、样本、区间、置信度）显式写入断言，不丢失。
+
+### 对得上
+- 每条断言绑定**真正支持它的最小证据片段**，片段位置可指出。
+- 不允许把综述转述、作者推测、他处结论当作直接证据；证据等级如实标注。
+
+### 追得回
+- 断言—证据—论文—作者—年份—版本之间的链路完整，他人可回到原文逐条核对。
+
+### 读得懂
+- 导出结构符合约定的字段与序列化形态，能被下游程序直接解析。
+
+## 输出结构
+
+`/app/output/result.json`（合并 task.md 的 `output_contract`）：
+
+```json
+{
+  "case_id": "...",
+  "status": "success|partial|unable",
+  "source": {"paper": "...", "authors": ["..."], "year": 0, "doi": null, "version": "..."},
+  "assertions": [
+    {
+      "id": "A1",
+      "assertion": "...",
+      "subject": "...",
+      "relation": "...",
+      "object": "...",
+      "condition": "...",
+      "polarity": "positive|negative",
+      "evidence": {"quote": "...", "locator": "p5 ¶3"},
+      "evidence_level": "direct|paraphrase|inferred",
+      "confidence_basis": "..."
+    }
+  ],
+  "sources": [...],
+  "uncertainty": [{"assertion_id": "A3", "issue": "证据跨图表，无法定位单句", "action": "标记 unsupported"}],
+  "change_records": [...]
+}
+```
+
+## 异常处理
+
+- 断言找不到支撑片段：标 `unsupported` + 原因，不硬凑、不把推测当证据。
+- 断言与证据冲突：保留双方，列入 `uncertainty`，说明冲突。
+- 证据跨图表/公式：定位到图表/公式号，标注"无法定位单句"。
+- 字段缺失（作者/年份/DOI）：如实标 `unknown`，不编造元数据。
+- 原文无法访问：`status="unable"`，说明原因。
+
+## 自查清单
+
+1. 每条断言是否单主体、单关系、可独立判断真假？
+2. 条件与限定是否保留在断言内？
+3. 每条断言是否绑定最小证据片段 + 原文位置？
+4. 证据等级（直接/转述/推测）是否如实标注？
+5. 来源链路是否完整、导出是否可机器解析？
+6. `result.json` 是否字段齐全、状态诚实？
+
+最小调用示例见 `examples/minimal-example.md`（标注为示例）。
